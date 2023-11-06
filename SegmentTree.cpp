@@ -1,4 +1,7 @@
 #include <bits/stdc++.h>
+
+using i64 = long long;
+
 template<class Info, class Tag>
 struct LazySegmentTree {
     int n;
@@ -20,9 +23,22 @@ struct LazySegmentTree {
         n = init_.size();
         info.assign(4 << std::__lg(n), Info());
         tag.assign(4 << std::__lg(n), Tag());
+        // the initialize in the segmentTree leaf
+        std::function<void(int, int)> leaf_init = [&](int p, int l) {
+            for (int i = 0; i < 2; i++) {
+                auto &k = info[p].s[i];
+                if (init_[l] == i) {
+                    k.l = k.r = k.ans = 1;
+                    k.all = true;
+                } else {
+                    k.l = k.r = k.ans = 0;
+                    k.all = false;
+                }
+            }
+        };
         std::function<void(int, int, int)> build = [&](int p, int l, int r) {
             if (r - l == 1) {
-                info[p] = init_[l];
+                leaf_init(p, l);
                 return;
             }
             int m = (l + r) / 2;
@@ -134,25 +150,42 @@ struct LazySegmentTree {
     }
 };
 
-constexpr int C = 1 << 18;
-constexpr int inf = 1E9;
-
 struct Tag {
-    int add = 0;
+    bool flag = false;
     
     void apply(const Tag &t) & {
-        add += t.add;
+        flag ^= t.flag;
     }
 };
 
 struct Info {
-    int max = 0;
+    struct node {
+        int ans = 0;
+        int l = 0, r = 0;
+        bool all = false;
+    }s[2];
     
     void apply(const Tag &t) & {
-        max += t.add;
+        if (t.flag) {
+            std::swap(s[0], s[1]);
+        }
     }
 };
 
 Info operator+(const Info &a, const Info &b) {
-    return {std::max(a.max, b.max)};
+    Info info;
+    for (int i = 0; i < 2; i++) {
+        const auto &L = a.s[i], R = b.s[i];
+        info.s[i].l = L.l;
+        info.s[i].r = R.r;
+        info.s[i].ans = std::max({L.ans, R.ans, L.r + R.l});
+        if (L.all) {
+            info.s[i].l += R.l;
+        }
+        if (R.all) {
+            info.s[i].r += L.r;
+        }
+        info.s[i].all = L.all && R.all;
+    }
+    return info;
 }
