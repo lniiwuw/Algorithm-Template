@@ -5,7 +5,7 @@ private:
     vector<T> v;
     FenwickTree(int n) : n(n), v(n, inf) {}
 public:
-    void update(int x, int y) {
+    void update(int x, T y) {
         x += 1;
         for (; x <= n; x += x & -x) {
             v[x - 1] = min(v[x - 1], y);
