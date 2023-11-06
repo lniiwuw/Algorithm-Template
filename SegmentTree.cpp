@@ -36,6 +36,7 @@ struct LazySegmentTree {
                 }
             }
         };
+        // build segmentTree 
         std::function<void(int, int, int)> build = [&](int p, int l, int r) {
             if (r - l == 1) {
                 leaf_init(p, l);
@@ -51,10 +52,12 @@ struct LazySegmentTree {
     void pull(int p) {
         info[p] = info[2 * p] + info[2 * p + 1];
     }
+    //the lazy tag add to node
     void apply(int p, const Tag &v) {
         info[p].apply(v);
         tag[p].apply(v);
     }
+    //the lazy tag add to child node 
     void push(int p) {
         apply(2 * p, tag[p]);
         apply(2 * p + 1, tag[p]);
@@ -73,7 +76,8 @@ struct LazySegmentTree {
             modify(2 * p + 1, m, r, x, v);
         }
         pull(p);
-    }
+    }   
+    // modify single node in x
     void modify(int p, const Info &v) {
         modify(1, 0, n, p, v);
     }
@@ -88,6 +92,7 @@ struct LazySegmentTree {
         push(p);
         return rangeQuery(2 * p, l, m, x, y) + rangeQuery(2 * p + 1, m, r, x, y);
     }
+    // query information in range [l, r)
     Info rangeQuery(int l, int r) {
         return rangeQuery(1, 0, n, l, r);
     }
@@ -105,6 +110,7 @@ struct LazySegmentTree {
         rangeApply(2 * p + 1, m, r, x, y, v);
         pull(p);
     }
+    // modify node in range [l, r)
     void rangeApply(int l, int r, const Tag &v) {
         return rangeApply(1, 0, n, l, r, v);
     }
@@ -150,6 +156,7 @@ struct LazySegmentTree {
     }
 };
 
+// the lazy tag
 struct Tag {
     bool flag = false;
     
@@ -158,6 +165,7 @@ struct Tag {
     }
 };
 
+// SegmentTree node
 struct Info {
     struct node {
         int ans = 0;
