@@ -1,4 +1,4 @@
-#define NOMINMAX
+#include <bits/stdc++.h>
 template<class Info, class Tag>
 struct LazySegmentTree {
     int n;
