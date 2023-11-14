@@ -17,7 +17,7 @@ public:
         x = std::min(x, n - 1);
         T y = inf;
         x += 1;
-        for (; x; x -= x & -x) {
+        for (; x > 0; x -= x & -x) {
             y = std::min(y, v[x - 1]);
         }
         return y;
