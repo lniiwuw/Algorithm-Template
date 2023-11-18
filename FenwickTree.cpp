@@ -49,4 +49,8 @@ public:
         }
         return sum;
     }
+
+    T rangQuery(int l, int r) {
+        return query(r) - query(l - 1);
+    }
 };
