@@ -8,7 +8,6 @@ struct ST {
 
     ST (vector<int> &a) : v(a){
         n = a.size();
-
         lg.resize(n + 2);
         lg[2] = 1;
         for (int i = 3; i <= n; i++) {
