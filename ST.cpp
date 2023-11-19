@@ -1,7 +1,6 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-// 下列ST表结构只对长度大于 1 的数组成立
 struct ST {
     int n;
     vector<vector<int>> dpmx, dpmn;
@@ -10,7 +9,7 @@ struct ST {
     ST (vector<int> &a) : v(a){
         n = a.size();
 
-        lg.resize(n + 1);
+        lg.resize(n + 2);
         lg[2] = 1;
         for (int i = 3; i <= n; i++) {
             lg[i] = lg[i/2] + 1;
