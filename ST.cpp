@@ -1,8 +1,7 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-// maybe error
-
+// 下列ST表结构只对长度大于 1 的数组成立
 struct ST {
     int n;
     vector<vector<int>> dpmx, dpmn;
