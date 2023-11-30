@@ -1,3 +1,5 @@
+#include <bits/stdc++.h>
+
 // strongly connected component
 struct SCC {
     int n;
