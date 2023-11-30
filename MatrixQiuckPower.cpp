@@ -1,28 +1,30 @@
 template<typename T>
 class MatrixQuickPower {
 private:
-    int n;
-    MatrixQuickPower (int _n) :n(_n) {}
+    int row;
     static const int MOD = 1e9 + 7;
 
 public:
-    // 矩阵乘法
-    vector<vector<long long>> multiply(vector<vector<long long>> &a, vector<vector<long long>> &b) {
-        vector<vector<long long>> c(n, vector<long long>(n));
-        for (int i = 0; i < n; i++) {
-            for (int j = 0; j < n; j++) {
-                for (int k = 0; k < n; k++) {
-                    c[i][j] = (c[i][j] + a[i][k] * b[k][j]) % MOD;
+    MatrixQuickPower(int _n) : row(_n) {}
+
+    // Matrix multiplication
+    std::vector<std::vector<T>> multiply(const std::vector<std::vector<T>> &a, const std::vector<std::vector<T>> &b) {
+        int m = a.size();
+        std::vector<std::vector<T>> ret(m, std::vector<T>(m));
+        for (int i = 0; i < m; i++) {
+            for (int j = 0; j < m; j++) {
+                for (int k = 0; k < m; k++) {
+                    ret[i][j] += a[i][k] * b[k][j];
                 }
             }
         }
-        return c;
+        return ret;
     }
 
-    // 矩阵快速幂
-    vector<vector<long long>> pow(vector<vector<long long>> &a, long long n) {
-        vector<vector<long long>> res;
-        // 初始化为单位矩阵
+    // Matrix quick power
+    std::vector<std::vector<T>> quickPow(std::vector<std::vector<T>> &a, T n) {
+        std::vector<std::vector<T>> res(row, std::vector<T>(row));
+        // Initialize as the identity matrix
         for (int i = 0; i < res.size(); i++) {
             res[i][i] = 1;
         }
