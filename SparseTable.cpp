@@ -1,12 +1,11 @@
 #include <bits/stdc++.h>
-using namespace std;
 
 struct SparseTable{
     int n;
-    vector<vector<int>> dpmx, dpmn;
-    vector<int> lg, v;
+    std::vector<std::vector<int>> dpmx, dpmn;
+    std::vector<int> lg, v;
 
-    SparseTable (vector<int> &a) : v(a){
+    SparseTable (std::vector<int> &a) : v(a){
         n = a.size();
         lg.resize(n + 2);
         lg[2] = 1;
@@ -14,26 +13,26 @@ struct SparseTable{
             lg[i] = lg[i/2] + 1;
         }
 
-        dpmx.resize(n, vector<int> (32, INT32_MIN));
-        dpmn.resize(n, vector<int> (32, INT32_MAX));
+        dpmx.resize(n, std::vector<int> (32, INT32_MIN));
+        dpmn.resize(n, std::vector<int> (32, INT32_MAX));
         for (int i = 0; i < n; i++) {
             dpmx[i][0] = dpmn[i][0] = v[i];
         }
         for (int j = 1; j < 30; j++) {
             for (int i = 0; i + (1 << j) - 1 < n; i++) {
-                dpmx[i][j] = max(dpmx[i][j - 1], dpmx[i + (1 << (j - 1))][j - 1]);
-                dpmn[i][j] = min(dpmn[i][j - 1], dpmn[i + (1 << (j - 1))][j - 1]);            
+                dpmx[i][j] = std::max(dpmx[i][j - 1], dpmx[i + (1 << (j - 1))][j - 1]);
+                dpmn[i][j] = std::min(dpmn[i][j - 1], dpmn[i + (1 << (j - 1))][j - 1]);            
             }
         }
     }
 
     int getmax(int l, int r) {
         int k = lg[r - l + 1];
-        return max(dpmx[l][k], dpmx[r - (1 << k) + 1][k]);
+        return std::max(dpmx[l][k], dpmx[r - (1 << k) + 1][k]);
     }
 
     int getmin(int l, int r) {
         int k = lg[r - l + 1];
-        return min(dpmn[l][k], dpmn[r - (1 << k) + 1][k]);
+        return std::min(dpmn[l][k], dpmn[r - (1 << k) + 1][k]);
     }
 };
