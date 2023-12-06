@@ -26,10 +26,13 @@ struct TreeAncestor {
         };
         dfs(0, -1);
 
-        for (int i = 0; i < m - 1; i++)
-            for (int x = 0; x < n; x++)
-                if (int p = pa[x][i]; p != -1)
+        for (int i = 0; i < m - 1; i++) {
+            for (int x = 0; x < n; x++) {
+                if (int p = pa[x][i]; p != -1) {
                     pa[x][i + 1] = pa[p][i];
+                }
+            }
+        }
     }
 
     int get_kth_ancestor(int node, int k) {
