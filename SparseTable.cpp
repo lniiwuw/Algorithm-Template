@@ -8,17 +8,17 @@ struct SparseTable{
     SparseTable (std::vector<int> &a) : v(a){
         n = a.size();
         lg.resize(n + 2);
-        lg[2] = 1;
-        for (int i = 3; i <= n; i++) {
+        for (int i = 2; i <= n; i++) {
             lg[i] = lg[i/2] + 1;
         }
 
-        dpmx.resize(n, std::vector<int> (32, INT32_MIN));
-        dpmn.resize(n, std::vector<int> (32, INT32_MAX));
+        int m = 33 - __builtin_clz(n);
+        dpmx.resize(n, std::vector<int> (m));
+        dpmn.resize(n, std::vector<int> (m));
         for (int i = 0; i < n; i++) {
             dpmx[i][0] = dpmn[i][0] = v[i];
         }
-        for (int j = 1; j < 30; j++) {
+        for (int j = 1; j < m; j++) {
             for (int i = 0; i + (1 << j) - 1 < n; i++) {
                 dpmx[i][j] = std::max(dpmx[i][j - 1], dpmx[i + (1 << (j - 1))][j - 1]);
                 dpmn[i][j] = std::min(dpmn[i][j - 1], dpmn[i + (1 << (j - 1))][j - 1]);            
