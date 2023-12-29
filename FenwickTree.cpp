@@ -45,7 +45,7 @@ public:
         T sum = 0;
         x += 1;
         for (; x > 0; x -= x & -x) {
-            sum += = v[x - 1];
+            sum += v[x - 1];
         }
         return sum;
     }
