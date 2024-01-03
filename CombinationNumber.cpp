@@ -1,7 +1,8 @@
 const int MOD = 1'000'000'007;
+const int MOD = 998'244'353;
 const int MX = 100'000;
 
-long long q_pow(long long x, int n) {
+long long q_pow(long long x, long long n) {
     long long res = 1;
     for (; n > 0; n /= 2) {
         if (n % 2) {
