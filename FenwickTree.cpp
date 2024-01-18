@@ -32,7 +32,7 @@ private:
     int n;
     std::vector<T> v;
 public:
-    FenwickTree(int n) : n(n), v(n) {}
+    FenwickTree(int n) : n(n), v(n, 0) {}
     void update(int x, T y) {
         x += 1;
         for (; x <= n; x += x & -x) {
