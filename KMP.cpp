@@ -4,8 +4,8 @@ public:
     KMP() {}
     
     // 求match数组，即next数组
-    vector<int> calc_max_match(string s) {
-        vector<int> match(s.length());
+    std::vector<int> calc_max_match(string s) {
+        std::vector<int> match(s.length());
         int c = 0;
         for (int i = 1; i < s.length(); i++) {
             char v = s[i];
@@ -22,7 +22,7 @@ public:
 
     // 返回 text 中出现了多少次 pattern（允许 pattern 重叠）
     int kmp_search(string text, string pattern) {
-        vector<int> match = calc_max_match(pattern);
+        std::vector<int> match = calc_max_match(pattern);
         int match_cnt = 0, c = 0;
         for (int i = 0; i < text.length(); i++) {
             char v = text[i];
