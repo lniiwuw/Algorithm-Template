@@ -29,6 +29,7 @@ struct stringhash {
         for (char ch : text) {
             res = res * base + (ch - 'a' + 1) ;
         }
+        return res;
     }
 };
 
