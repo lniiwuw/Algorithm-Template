@@ -34,7 +34,7 @@ struct Manacher {
         }
     }
 
-    bool check (int l, int r) {
+    bool PalindromeCheck (int l, int r) {
         int id = (r + l + 1) / 2;
         if ((r - l + 1) & 1) {
             return d1[id] >= (r - l + 2) / 2;
