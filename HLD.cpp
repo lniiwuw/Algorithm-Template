@@ -90,32 +90,4 @@ struct HLD {
     bool isAncester(int u, int v) {
         return in[u] <= in[v] && in[v] < out[u];
     }
-    
-    int rootedParent(int u, int v) {
-        std::swap(u, v);
-        if (u == v) {
-            return u;
-        }
-        if (!isAncester(u, v)) {
-            return parent[u];
-        }
-        auto it = std::upper_bound(adj[u].begin(), adj[u].end(), v, [&](int x, int y) {
-            return in[x] < in[y];
-        }) - 1;
-        return *it;
-    }
-    
-    int rootedSize(int u, int v) {
-        if (u == v) {
-            return n;
-        }
-        if (!isAncester(v, u)) {
-            return siz[v];
-        }
-        return n - siz[rootedParent(u, v)];
-    }
-    
-    int rootedLca(int a, int b, int c) {
-        return lca(a, b) ^ lca(b, c) ^ lca(c, a);
-    }
 };
