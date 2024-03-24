@@ -1,9 +1,15 @@
 // 01trie find the max xor
+#include<bits/stdc++.h>
 const int N = 2e6 + 10;
-int tree[N][2], cnt[N];
-int idx = 0;
-
 struct PrefixTree{
+    std::vector<std::array<int, 2>> tree;
+    std::vector<int> cnt;
+    int idx;
+    PrefixTree (int sz) {
+        tree.assign(sz, std::array<int, 2>{});
+        cnt.assign(sz, 0);
+        idx = 0;
+    }
     void insert(int num) {
         int p = 0;
         for (int i = 20; i >= 0; i--) {
@@ -13,7 +19,6 @@ struct PrefixTree{
             cnt[p] ++;
         }
     }
-
     void del(int num) {
         int p = 0;
         for (int i = 20; i >= 0; i--) {
@@ -22,7 +27,6 @@ struct PrefixTree{
             cnt[p] --;
         }
     }
-
     int find(int num) {
         int sum = 0, p = 0;
         for (int i = 20; i >= 0; i--) {
@@ -37,4 +41,11 @@ struct PrefixTree{
         }
         return sum;
     }
-};
+    void clear() {
+        for (int i = 0; i <= idx; i++) {
+            cnt[i] = 0;
+            for (int j = 0; j < 2; j++) tree[i][j] = 0;
+        }
+        idx = 0;
+    }
+} trie(N);
