@@ -7,15 +7,18 @@ struct Dijkstra {
     std::vector<std::vector<std::pair<int, i64>>> adj;
     int n;
     
-    Dijkstra(int n, std::vector<std::vector<int>> &d) {
+    Dijkstra(int n) {
         this->n = n;
         adj.resize(n);
-        for (int i = 0; i < d.size(); i++) {
-            auto &k = d[i];
-            int u = d[i][0], v = d[i][1], w = d[i][2];
-            adj[u].push_back({v, w});
-            adj[v].push_back({u, w});
-        }
+    }
+
+    void add (int u, int v, i64 w) {
+        adj[u].push_back({v, w});
+        adj[v].push_back({u, w});
+    }
+
+    void addSingle (int u, int v, i64 w) {
+        adj[u].push_back({v, w});
     }
     
     std::vector<i64> work(int s) {
