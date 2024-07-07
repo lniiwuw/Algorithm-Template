@@ -9,12 +9,12 @@ struct stringhash {
     stringhash(std::string &text) {
         n = text.size();
         hash.resize(n + 1);
-        p.resize(n);
+        p.resize(n + 1);
         hash[0] = 0, p[0] = 1;
         for(int i = 0; i < n; i++) {
             hash[i + 1] = hash[i] * base + (text[i] - 'a' + 1);
         }
-        for(int i = 1; i < n;i++) {
+        for(int i = 1; i <= n;i++) {
             p[i] = p[i - 1] * base;
         }
     }
